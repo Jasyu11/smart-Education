@@ -15,8 +15,8 @@ import { green,red } from '@mui/material/colors';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-//import NavBar from "./NavBar";
-import { Controller } from 'react-hook-form'
+import { Controller } from 'react-hook-form';
+import Label from '../components/label/Label';
 
 
 
@@ -34,7 +34,6 @@ function Profile() {
       >
         Profile
       </Typography>
-      <NavBar />
       <div className="user_detail">
         <CardMedia
                 component="img"
@@ -48,13 +47,16 @@ function Profile() {
         style={{ display: 'none' }}
         id="contained-button-file"
         />
-        <FormControl>
-        <label htmlFor="contained-button-file">
+        
+        
+        <Label htmlFor="contained-button-file">
             <Button variant="contained" color="primary" component="span">
               Upload Icon
+              
             </Button>
-        </label>
-        </FormControl>
+        </Label>
+
+        
         <Button href="./EditProfile">Update Profile</Button>
                 <Typography variant="body1" color="text.secondary"
                     style={{
@@ -88,37 +90,7 @@ function Profile() {
           </CardContent>
       </Card>
       <br/>
-      <Card>
-        <CardHeader
-          title =  'Followed Game'
-          />
-          <div className="game-icons">
-            <CardMedia
-            component="img"
-            height="50"
-            image=" "
-            alt=" "
-            />
-            <CardMedia
-            component="img"
-            height="50"
-            image=" "
-            alt=" "
-            />
-            <CardMedia
-            component="img"
-            height="50"
-            image=" "
-            alt=" "
-            />
-            <CardMedia
-            component="img"
-            height="50"
-            image=" "
-            alt=" "
-            />
-            </div>
-      </Card>
+      
         <br/>
       
       <br/>

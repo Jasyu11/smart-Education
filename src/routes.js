@@ -12,7 +12,9 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import AssignmentDetail from './pages/AssignmentDetail';
 import AssignmentMark from './pages/AssignmentMark';
-
+import Profile from './pages/Profile';
+import Register from './pages/Register';
+import CreatingAvatar from './pages/CreatingAvatar';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -24,19 +26,23 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { 
-          path:'assignment', 
-          element: <Assignment /> ,
+        { path:'assignment', element: <Assignment /> ,
         },
         { path: 'assignmentDetail', element: <AssignmentDetail/>},
         { path: 'assignmentMark', element: <AssignmentMark/>},
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'profile', element: <Profile/>,
+        },
       ],
     },
     {
-      path: 'login',
+      path: '/login',
       element: <LoginPage />,
+      children: [
+        {element: <Navigate to='/login'/>, index: true},
+        { path: 'register', element: <Register/>}
+      ],
     },
     {
       element: <SimpleLayout />,
