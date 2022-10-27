@@ -16,6 +16,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
+import {Link} from "react-router-dom";
 import Label from '../components/label/Label';
 
 
@@ -48,7 +49,12 @@ function Profile() {
         id="contained-button-file"
         />
         
-        
+        <Label htmlFor="contained-button-file">
+            <Button variant="contained" color="primary" component="span">
+            <Link to="/dashboard/creatingavatar">Creating Avatar</Link> 
+            </Button>
+        </Label>
+
         <Label htmlFor="contained-button-file">
             <Button variant="contained" color="primary" component="span">
               Upload Icon

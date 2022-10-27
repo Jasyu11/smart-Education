@@ -2,6 +2,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
+import CourseLayout from './layouts/course';
 //
 import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
@@ -15,6 +16,11 @@ import AssignmentMark from './pages/AssignmentMark';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import CreatingAvatar from './pages/CreatingAvatar';
+import AssignmentDetailMCQ from './pages/AssignmentMCQ';
+import CoursePage from './pages/CoursePage';
+import Discussion from './pages/Discussion';
+import Upload from './pages/Upload';
+import LearningMaterial from './pages/LearningMaterial';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -25,24 +31,33 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
-        { path:'assignment', element: <Assignment /> ,
-        },
-        { path: 'assignmentDetail', element: <AssignmentDetail/>},
-        { path: 'assignmentMark', element: <AssignmentMark/>},
-        { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
-        { path: 'profile', element: <Profile/>,
-        },
+        { path: 'profile', element: <Profile/>,},
+        { path: 'creatingavatar', element: <CreatingAvatar/>},
       ],
     },
+    { path: '/coursepage',
+    element: <CourseLayout/>,
+    children:[
+      {element:<Navigate to='/coursepage/app'/>, index: true},
+      { path: 'app', element: <CoursePage/>},
+      { path: 'user', element: <UserPage /> },
+      { path: 'assignment', element: <Assignment /> },
+      { path: 'assignmentDetail', element: <AssignmentDetail/>},
+        { path: 'assignmentMCQ', element: <AssignmentDetailMCQ />},
+        { path: 'assignmentMark', element: <AssignmentMark/>},
+      { path: 'Discussion', element: <Discussion/>},
+      { path: 'LearningMaterial', element: <LearningMaterial/>},
+      { path: 'Upload', element: <Upload/>},
+
+    ]
+  },
     {
       path: '/login',
       element: <LoginPage />,
-      children: [
-        {element: <Navigate to='/login'/>, index: true},
-        { path: 'register', element: <Register/>}
-      ],
+    },
+    {
+      path: 'register', element: <Register/>
     },
     {
       element: <SimpleLayout />,

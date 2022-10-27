@@ -1,7 +1,7 @@
 // @mui
 import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, Button } from '@mui/material';
 // utils
 import { fShortenNumber } from '../../../utils/formatNumber';
 // components
@@ -58,9 +58,12 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
 
       <Typography variant="h3">{fShortenNumber(total)}</Typography>
 
-      <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
+      <Button variant="subtitle2" sx={{ opacity: 0.72 }} href = {title}>
         {title}
-      </Typography>
+        
+      </Button>
+
+      
     </Card>
   );
 }

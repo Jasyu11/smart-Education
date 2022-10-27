@@ -12,14 +12,24 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'profile',
-    path: '/dashboard/profile',
+    title: 'user',
+    path: '/coursepage/user',
+    icon: icon('ic_user'),
+  },
+  {
+    title: 'assignment',
+    path: '/coursepage/assignment',
+    icon: icon('ic_user'),
+  },
+  {
+    title: 'Discussion',
+    path: '/coursepage/discussion',
     icon: icon('ic_cart'),
   },
   {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
+    title: 'LearningMaterial',
+    path: '/coursepage/learningmaterial',
+    icon: icon('ic_blog'),
   },
   {
     title: 'Not found',
