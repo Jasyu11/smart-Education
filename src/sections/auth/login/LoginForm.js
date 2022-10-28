@@ -4,45 +4,73 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Link, Stack, IconButton, InputAdornment, TextField, Checkbox } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
 import Iconify from '../../../components/iconify';
-
-
-// ----------------------------------------------------------------------
+// ---------------------------------------------------------------------
 
 
 export default function LoginForm() {
+  const [identity, setIdentity] = useState('');
+
+  const handleChange = (event) => {
+    setIdentity(event.target.value);
+  };
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event) => {
-    //
+    // navigate('/dashboard', {replace: true});
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    submitHandler(data.get('email'), data.get('password'));
+    submitHandler(data.get('email'), data.get('password'),data.get('identity'));
+
   };
 
-  const submitHandler = (email, password) => {
-
+  let requestBody = '';
+  const submitHandler = (email, password, identity) => {
+    console.log(identity);
     if (email.trim().length === 0 || password.trim().length === 0) {
 
       return;
     }
-
-    const requestBody = {
-      query: `
-            query{
-                studentLogin(loginInput:{
-                  email: "${email}",
-                  password: "${password}"
-                }){
-                  id
-                  token
+    if (identity ==='Student'){
+       requestBody = {
+        query: `
+              query{
+                  studentLogin(loginInput:{
+                    email: "${email}",
+                    password: "${password}"
+                  }){
+                    id
+                    token
+                  }
                 }
-              }
-            `,
-    };
+              `,
+      };
+    }else{
+      requestBody = {
+        query: `
+              query{
+                  teacherLogin(loginInput:{
+                    email: "${email}",
+                    password: "${password}"
+                  }){
+                    id
+                    token
+                  }
+                }
+              `,
+      };
+    }
 
     fetch('http://localhost:8080/graphql', {
       method: 'POST',
@@ -61,10 +89,15 @@ export default function LoginForm() {
         },
       )
       .then((resData) => {
-        console.log(resData.data.studentLogin);
-        sessionStorage.setItem("userId", resData.data.studentLogin.id)
-        navigate('/dashboard', {replace: true});
+        console.log(resData);
+        sessionStorage.setItem("usertype", identity)
+        if(identity === 'Student'){
+          sessionStorage.setItem("userid", resData.data.studentLogin.id);
+        }else if(identity === 'Teacher'){
+          sessionStorage.setItem("userid", resData.data.teacherLogin.id);
+        }
 
+        navigate('/dashboard', {replace: true});
       })
       .catch((err) => {
         console.log(err);
@@ -98,9 +131,31 @@ export default function LoginForm() {
               ),
             }}
           />
+              <br/>
+              <br/>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Identity</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      name='identity'
+                      value={identity}
+                      label="Identity"
+                      onChange={handleChange}
+                      required
+                    >
+                      <MenuItem value={'Student'}>Student</MenuItem>
+                      <MenuItem value={'Teacher'}>Teacher</MenuItem>
+
+                    </Select>
+                  </FormControl>
+                </Box>
 
           <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ my: 2 }}>
-            <Checkbox name='remember' label='Remember me' />
+          <FormGroup>
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Remember me" />
+          </FormGroup>
             <Link variant='subtitle2' underline='hover'>
               Forgot password?
             </Link>
