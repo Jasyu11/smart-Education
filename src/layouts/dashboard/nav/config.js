@@ -16,11 +16,13 @@ const navConfig = [
     path: '/dashboard/profile',
     icon: icon('ic_cart'),
   },
+  /*
   {
     title: 'login',
     path: '/login',
     icon: icon('ic_lock'),
   },
+  */
   {
     title: 'Not found',
     path: '/404',

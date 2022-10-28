@@ -58,7 +58,11 @@ function Register() {
       console.log('The password you input twice are different!');
       return;
     }
-
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const iosk = reg.test(email);
+    if(!iosk) {
+      alert("Invalid email");
+    }
     let requestBody = '';
     if(identity === 'Student'){
       requestBody = {
