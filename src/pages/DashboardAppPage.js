@@ -92,7 +92,8 @@ export default function DashboardAppPage() {
         <Typography variant="h3" sx={{ mb: 5 }}>
           Hi, Welcome to Smart Education!
         </Typography>
-        
+
+
         <Typography variant="h4" sx={{ mb: 5 }}>
           Your Course
         </Typography>
