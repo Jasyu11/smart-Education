@@ -21,6 +21,7 @@ import CoursePage from './pages/CoursePage';
 import Discussion from './pages/Discussion';
 import Upload from './pages/Upload';
 import LearningMaterial from './pages/LearningMaterial';
+import Assign from './pages/Assign';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -59,7 +60,11 @@ export default function Router() {
     {
       path: 'register', element: <Register/>
     },
-    /*
+
+    {
+      path: 'Assign', element: <Assign/>
+    },
+
     {
       element: <SimpleLayout />,
       children: [
@@ -71,7 +76,7 @@ export default function Router() {
     {
       path: '*',
       element: <Navigate to="/404" replace />,
-    }, */
+    },
   ]);
 
   return routes;
