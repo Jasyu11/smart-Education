@@ -42,6 +42,11 @@ export default function LoginForm() {
 
       return;
     }
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const iosk = reg.test(email);
+    if(!iosk) {
+      alert("please check email");
+    }
     if (identity ==='Student'){
        requestBody = {
         query: `
@@ -101,6 +106,7 @@ export default function LoginForm() {
       })
       .catch((err) => {
         console.log(err);
+        
       });
 
   };
