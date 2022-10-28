@@ -1,3 +1,5 @@
+
+import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -42,7 +44,9 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
+
 export default function CoursePage() {
+
   const mdUp = useResponsive('up', 'md');
   const theme = useTheme();
 

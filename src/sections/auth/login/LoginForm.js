@@ -16,7 +16,7 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event) => {
-    // navigate('/dashboard', {replace: true});
+    //
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -29,7 +29,6 @@ export default function LoginForm() {
 
       return;
     }
-
 
     const requestBody = {
       query: `
@@ -62,7 +61,10 @@ export default function LoginForm() {
         },
       )
       .then((resData) => {
-        console.log(resData);
+        console.log(resData.data.studentLogin);
+        sessionStorage.setItem("userId", resData.data.studentLogin.id)
+        navigate('/dashboard', {replace: true});
+
       })
       .catch((err) => {
         console.log(err);

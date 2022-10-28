@@ -30,12 +30,7 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      username: data.get('username'),
-      repassword: data.get('repassword'),
-    });
+
     submitHandler(data.get('email'), data.get('password'),data.get('username'),data.get('repassword'))
   };
 
@@ -80,11 +75,8 @@ function Register() {
         return res.json();
       },
     ).then((resData) => {
-      console.log(email);
-      console.log(password)
-      console.log(resData);
+      console.log(resData.data.studentLogin.id);
     }).catch((err) => {
-      console.log(err);
     })
 
   };

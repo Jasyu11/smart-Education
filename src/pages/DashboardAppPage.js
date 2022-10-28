@@ -1,6 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
+import { useEffect, useState } from 'react';
+
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
@@ -20,6 +22,64 @@ import {
 
 // ----------------------------------------------------------------------
 export default function DashboardAppPage() {
+
+
+
+  const getCourseData = (initState = []) =>{
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [courseData,setCourseData] = useState(initState);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+
+      const id = sessionStorage.getItem("userId");
+      const token = sessionStorage.getItem("token");
+
+      const studentRequestBody = {
+        query:`query{
+                studentInformation(studentId: ${id}){
+                    id
+                    enrolledCourses{
+                      id
+                      course_name
+                      teacher{
+                        user_name
+                      }
+                      price
+                  }
+              }}`,
+      };
+      fetch('http://localhost:8080/graphql', {
+        method: 'POST',
+        body: JSON.stringify(studentRequestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      })
+        .then(
+          (res) => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!!');
+            }
+            return res.json();
+          },
+        )
+        .then((resData) => {
+          setCourseData(resData.data.studentInformation.enrolledCourses);
+          console.log(courseData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+    }, [])
+
+    return courseData;
+  }
+
+
+
   const theme = useTheme();
 
   return (
@@ -38,21 +98,11 @@ export default function DashboardAppPage() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="CourseName" total={90} icon={'ant-design:android-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="CourseName" total={78} color="info" icon={'ant-design:apple-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="CourseName" total={82} color="warning" icon={'ant-design:windows-filled'} />
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="CourseName" total={87} color="error" icon={'ant-design:bug-filled'} />
-          </Grid>
+          {getCourseData().map(item =>{
+            return <Grid item xs={12} sm={6} md={3} key={item.id}>
+              <AppWidgetSummary title={item.teacher.user_name} total={item.course_name} icon={'ant-design:android-filled'} />
+            </Grid>
+          })}
 
           <Grid item xs={12} md={6} lg={20}>
             <AppNewsUpdate
