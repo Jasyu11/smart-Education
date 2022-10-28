@@ -41,6 +41,9 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
+  const Logout =() => {
+    sessionStorage.clear();
+  }
   return (
     <>
       <IconButton
