@@ -32,8 +32,7 @@ export default function DashboardAppPage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
 
-      const id = sessionStorage.getItem("userId");
-      const token = sessionStorage.getItem("token");
+      const id = sessionStorage.getItem("userid");
 
       const studentRequestBody = {
         query:`query{
