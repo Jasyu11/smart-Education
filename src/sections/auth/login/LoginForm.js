@@ -12,8 +12,8 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Iconify from '../../../components/iconify';
+import url from '../../../utils/weburl';
 // ---------------------------------------------------------------------
-
 
 
 export default function LoginForm() {
@@ -22,7 +22,7 @@ export default function LoginForm() {
   const handleChange = (event) => {
     setIdentity(event.target.value);
   };
-
+  
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +33,7 @@ export default function LoginForm() {
     const data = new FormData(event.currentTarget);
 
     submitHandler(data.get('email'), data.get('password'),data.get('identity'));
-
+    
   };
 
   let requestBody = '';
@@ -42,6 +42,11 @@ export default function LoginForm() {
     if (email.trim().length === 0 || password.trim().length === 0) {
 
       return;
+    }
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const iosk = reg.test(email);
+    if(!iosk) {
+      alert("Invalid email");
     }
     if (identity ==='Student'){
        requestBody = {
@@ -73,7 +78,7 @@ export default function LoginForm() {
       };
     }
 
-    fetch('http://172.20.10.4:8080/graphql', {
+    fetch(url, {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -97,11 +102,12 @@ export default function LoginForm() {
         }else if(identity === 'Teacher'){
           sessionStorage.setItem("userid", resData.data.teacherLogin.id);
         }
-
+        
         navigate('/dashboard', {replace: true});
       })
       .catch((err) => {
         console.log(err);
+        alert("Invalid email or wrong password");
       });
 
   };
@@ -151,7 +157,7 @@ export default function LoginForm() {
 
                     </Select>
                   </FormControl>
-                </Box>
+                </Box>  
 
           <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ my: 2 }}>
           <FormGroup>

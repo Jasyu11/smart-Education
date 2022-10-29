@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
+
 import { useTheme } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { Grid, Container, Typography } from '@mui/material';
@@ -18,7 +19,7 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
-
+import url from '../utils/weburl';
 // ----------------------------------------------------------------------
 export default function DashboardAppPage() {
   
@@ -45,7 +46,7 @@ export default function DashboardAppPage() {
                   }
               }}`,
       };
-      fetch('http://172.20.10.4:8080/graphql', {
+      fetch(url, {
         method: 'POST',
         body: JSON.stringify(studentRequestBody),
         headers: {

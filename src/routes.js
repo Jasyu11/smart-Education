@@ -23,6 +23,7 @@ import Upload from './pages/Upload';
 import LearningMaterial from './pages/LearningMaterial';
 import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
+import Assign from './pages/Assign';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -57,24 +58,29 @@ export default function Router() {
     ]
   },
     {
-      path: '/login',
+      path: '/',
       element: <LoginPage />,
     },
     {
       path: 'register', element: <Register/>
     },
+
     {
-      element: <SimpleLayout />,
-      children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
-        { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" /> },
-      ],
+      path: 'Assign', element: <Assign/>
     },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
+
+    // {
+    //   element: <SimpleLayout />,
+    //   children: [
+    //     { element: <Navigate to="/login" />, index: true },
+    //     { path: '404', element: <Page404 /> },
+    //     { path: '*', element: <Navigate to="/404" /> },
+    //   ],
+    // },
+    // {
+    //   path: '*',
+    //   element: <Navigate to="/404" replace />,
+    // },
   ]);
 
   return routes;
