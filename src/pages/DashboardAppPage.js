@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 // @mui
 import { useEffect, useState } from 'react';
 
+
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
@@ -19,7 +20,7 @@ import {
   AppCurrentSubject,
   AppConversionRates,
 } from '../sections/@dashboard/app';
-
+import url from '../utils/weburl';
 // ----------------------------------------------------------------------
 export default function DashboardAppPage() {
 
@@ -48,7 +49,7 @@ export default function DashboardAppPage() {
                   }
               }}`,
       };
-      fetch('http://localhost:8080/graphql', {
+      fetch(url, {
         method: 'POST',
         body: JSON.stringify(studentRequestBody),
         headers: {

@@ -65,18 +65,18 @@ export default function Router() {
       path: 'Assign', element: <Assign/>
     },
 
-    {
-      element: <SimpleLayout />,
-      children: [
-        { element: <Navigate to="/login" />, index: true },
-        { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" /> },
-      ],
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
+    // {
+    //   element: <SimpleLayout />,
+    //   children: [
+    //     { element: <Navigate to="/login" />, index: true },
+    //     { path: '404', element: <Page404 /> },
+    //     { path: '*', element: <Navigate to="/404" /> },
+    //   ],
+    // },
+    // {
+    //   path: '*',
+    //   element: <Navigate to="/404" replace />,
+    // },
   ]);
 
   return routes;

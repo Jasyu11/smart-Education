@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Logo from '../components/logo';
+import url from '../utils/weburl';
 
 
 
@@ -98,7 +99,7 @@ function Register() {
      
 
     fetch(
-      'http://localhost:8080/graphql', {
+      url, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {

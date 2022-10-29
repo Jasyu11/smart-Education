@@ -12,6 +12,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Iconify from '../../../components/iconify';
+import url from '../../../utils/weburl';
 // ---------------------------------------------------------------------
 
 
@@ -77,7 +78,7 @@ export default function LoginForm() {
       };
     }
 
-    fetch('http://localhost:8080/graphql', {
+    fetch(url, {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
