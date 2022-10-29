@@ -6,13 +6,14 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, Grid,
     Link,
     Stack,
     Typography
 } from "@mui/material";
 
 import {fCurrency} from "../../utils/formatNumber";
+import {AppWidgetSummary} from "./app";
 
 export default function CourseCard({course}){
     const {id, course_name: courseName, price, teacher, course_description: courseDescription} = course;
@@ -37,7 +38,7 @@ export default function CourseCard({course}){
 
             <Stack spacing={2} sx={{ p: 3 }}>
                 <Link color="inherit" underline="hover">
-                    <Typography variant="subtitle2" noWrap>
+                    <Typography variant="subtitle1" noWrap>
                         {courseName}
                     </Typography>
                 </Link>
