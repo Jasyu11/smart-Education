@@ -16,13 +16,14 @@ import url from '../../../utils/weburl';
 // ---------------------------------------------------------------------
 
 
+
 export default function LoginForm() {
   const [identity, setIdentity] = useState('');
 
   const handleChange = (event) => {
     setIdentity(event.target.value);
   };
-  
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -33,7 +34,7 @@ export default function LoginForm() {
     const data = new FormData(event.currentTarget);
 
     submitHandler(data.get('email'), data.get('password'),data.get('identity'));
-    
+
   };
 
   let requestBody = '';
@@ -102,7 +103,7 @@ export default function LoginForm() {
         }else if(identity === 'Teacher'){
           sessionStorage.setItem("userid", resData.data.teacherLogin.id);
         }
-        
+
         navigate('/dashboard', {replace: true});
       })
       .catch((err) => {
@@ -157,7 +158,7 @@ export default function LoginForm() {
 
                     </Select>
                   </FormControl>
-                </Box>  
+                </Box>
 
           <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{ my: 2 }}>
           <FormGroup>
