@@ -1,4 +1,9 @@
 import { Helmet } from 'react-helmet-async';
+import React, { Component } from 'react';
+import { Player } from 'video-react';
+import ReactPlayer from "react-player";
+import { Form, FormGroup, Label, Input } from 'reactstrap';
+
 // @mui
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
@@ -7,7 +12,6 @@ import useResponsive from '../hooks/useResponsive';
 import Iconify from '../components/iconify';
 import Logo from '../components/logo';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
-// mock
 import POSTS from '../_mock/blog';
 
 
@@ -40,6 +44,8 @@ const StyledSection = styled('div')(({ theme }) => ({
 
 export default function BlogPage() {
   const mdUp = useResponsive('up', 'md');
+
+
   return (
     
     <>
@@ -47,25 +53,25 @@ export default function BlogPage() {
         <title> Smart Education | Learning </title>
       </Helmet>
 
-      
-
       <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1}>
           <Typography variant="h4" gutterBottom>
             Learning Material
           </Typography>
         </Stack>
-       
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
-        </Stack>
-
-        <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
+        <Grid container spacing={1}>
+        <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
+            <ReactPlayer 
+              controls 
+              url = "https://www.youtube.com/watch?v=7sDY4m8KNLc"
+              onReady={() => console.log("onReady callback")}
+              onStart={() => console.log("onStart callback")}
+              onPause={() => console.log("onPause callback")}
+              onEnded={() => console.log("onEnded callback")}
+              onError={() => console.log("onError callback")}
+            />
+        </div>
         </Grid>
         
       </Container>
