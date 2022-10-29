@@ -126,7 +126,9 @@ function Profile() {
     };
 
     return Data;
-  } 
+  }
+
+  const data = Getprofile();
 
   return (
     <Container>
