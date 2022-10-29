@@ -8,11 +8,13 @@ import { Form, FormGroup, Label, Input } from 'reactstrap';
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import { styled } from '@mui/material/styles';
+import Showme from '../components/showme/showme';
 import useResponsive from '../hooks/useResponsive';
 import Iconify from '../components/iconify';
 import Logo from '../components/logo';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
 import POSTS from '../_mock/blog';
+
 
 
 // ----------------------------------------------------------------------
@@ -32,7 +34,7 @@ const StyledRoot = styled('div')(({ theme }) => ({
 
 const StyledSection = styled('div')(({ theme }) => ({
   width: '100%',
-  maxWidth: 400,
+  maxWidth: 600,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -60,7 +62,7 @@ export default function BlogPage() {
           </Typography>
         </Stack>
 
-        <Grid container spacing={1}>
+        <Grid container spacing={2}>
         <div style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
             <ReactPlayer 
               controls 
@@ -72,7 +74,12 @@ export default function BlogPage() {
               onError={() => console.log("onError callback")}
             />
         </div>
+        <Showme/>
         </Grid>
+      
+          
+       
+        
         
       </Container>
     
