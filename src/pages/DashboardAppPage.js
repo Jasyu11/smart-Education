@@ -48,7 +48,7 @@ export default function DashboardAppPage() {
                   }
               }}`,
       };
-      fetch('http://localhost:8080/graphql', {
+      fetch('http://172.20.10.4:8080/graphql', {
         method: 'POST',
         body: JSON.stringify(studentRequestBody),
         headers: {
