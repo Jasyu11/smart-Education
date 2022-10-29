@@ -7,7 +7,6 @@ import { Box, Divider, Typography, Stack,
   Button } from '@mui/material';
 // mocks_
 import account from '../../../_mock/account';
-import Profile from "../../../pages/Profile";
 
 
 // ----------------------------------------------------------------------
@@ -42,7 +41,6 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
-  const data = Profile.data;
 
   return (
     <>
@@ -87,10 +85,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {data.name}
+          {account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {data.email}
+          {account.email}
           </Typography>
         </Box>
 

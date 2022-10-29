@@ -15,7 +15,6 @@ import Scrollbar from '../../../components/scrollbar';
 import NavSection from '../../../components/nav-section';
 //
 import navConfig from './config';
-import Profile from "../../../pages/Profile";
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +37,6 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
 
-  const data = Profile.data;
 
   const { pathname } = useLocation();
 
@@ -71,11 +69,11 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {data.name}
+                {account.displayName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {data.name}
+              {account.displayName}
               </Typography>
             </Box>
           </StyledAccount>
