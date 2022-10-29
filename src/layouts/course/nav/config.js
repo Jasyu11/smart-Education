@@ -22,6 +22,11 @@ const navConfig = [
     icon: icon('ic_user'),
   },
   {
+    title: 'marks',
+    path: '/coursepage/marks',
+    icon: icon('ic_analytics'),
+  },
+  {
     title: 'Discussion',
     path: '/coursepage/discussion',
     icon: icon('ic_cart'),

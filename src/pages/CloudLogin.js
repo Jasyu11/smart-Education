@@ -83,7 +83,7 @@ class Clouds extends React.Component {
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>
-              Don鈥檛 have an account? {''}
+              Don't have an account? {''}
               <Link variant="subtitle2" href='./register'>Get started</Link>
             </Typography>
         

@@ -102,13 +102,7 @@ const Fuzzy = () => {
             },
             onChange: setEditableRowKeys,
         }}/>
-      <ProCard title="琛ㄦ牸鏁版嵁" headerBordered collapsible defaultCollapsed>
-        <ProFormField ignoreFormItem fieldProps={{
-            style: {
-                width: '100%',
-            },
-        }} mode="read" valueType="jsonCode" text={JSON.stringify(dataSource)}/>
-      </ProCard>
+      
       <Button>test</Button>
     </>);
 };

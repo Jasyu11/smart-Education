@@ -26,6 +26,7 @@ import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
 import Assign from './pages/CreatingAssign';
 import CreatingAssignment from './pages/CreatingAssignmentMCQ';
+import Marks from './pages/Marks';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -58,6 +59,7 @@ export default function Router() {
       { path: 'Upload', element: <Upload/>},
       { path: 'CreatingAssign', element:<Assign/>},
       { path: 'CreatingMCQ', element:<CreatingAssignment/>},
+      { path: 'Marks', element: <Marks/>},
 
     ]
   },

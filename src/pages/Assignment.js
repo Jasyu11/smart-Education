@@ -299,7 +299,7 @@ export default function Assignment() {
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           <Button type='primary'>
-            <Link to="/dashboard/assignmentDetail">Detail</Link>
+            <Link to="/coursepage/assignmentDetail">Detail</Link>
           </Button>
           
         </MenuItem>
@@ -307,7 +307,7 @@ export default function Assignment() {
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           <Button type='primary'>
-            <Link to="/dashboard/assignmentMark">Mark</Link>
+            <Link to="/coursepage/assignmentMark">Mark</Link>
           </Button>
         </MenuItem>
 
