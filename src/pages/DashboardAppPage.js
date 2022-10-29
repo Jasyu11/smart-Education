@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
-import { useEffect, useState } from 'react';
-
 import { useTheme } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
@@ -22,9 +21,7 @@ import {
 
 // ----------------------------------------------------------------------
 export default function DashboardAppPage() {
-
-
-
+  
   const getCourseData = (initState = []) =>{
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [courseData,setCourseData] = useState(initState);
@@ -48,7 +45,7 @@ export default function DashboardAppPage() {
                   }
               }}`,
       };
-      fetch('http://localhost:8080/graphql', {
+      fetch('http://172.20.10.4:8080/graphql', {
         method: 'POST',
         body: JSON.stringify(studentRequestBody),
         headers: {
@@ -76,9 +73,6 @@ export default function DashboardAppPage() {
 
     return courseData;
   }
-
-
-
   const theme = useTheme();
 
   return (
@@ -91,18 +85,28 @@ export default function DashboardAppPage() {
         <Typography variant="h3" sx={{ mb: 5 }}>
           Hi, Welcome to Smart Education!
         </Typography>
-
-
+        
         <Typography variant="h4" sx={{ mb: 5 }}>
           Your Course
         </Typography>
 
         <Grid container spacing={3}>
-          {getCourseData().map(item =>{
-            return <Grid item xs={12} sm={6} md={3} key={item.id}>
-              <AppWidgetSummary title={item.teacher.user_name} total={item.course_name} icon={'ant-design:android-filled'} />
-            </Grid>
-          })}
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="CourseName" total={90} icon={'ant-design:android-filled'} />
+            
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="CourseName" total={78} color="info" icon={'ant-design:apple-filled'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="CourseName" total={82} color="warning" icon={'ant-design:windows-filled'} />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={3}>
+            <AppWidgetSummary title="CourseName" total={87} color="error" icon={'ant-design:bug-filled'} />
+          </Grid>
 
           <Grid item xs={12} md={6} lg={20}>
             <AppNewsUpdate
@@ -133,7 +137,7 @@ export default function DashboardAppPage() {
       </Container>
     </>
   );
-}
+            }
 /*
 
 export default function DashboardAppPage() {
@@ -334,4 +338,5 @@ export default function DashboardAppPage() {
     </>
   );
 }
+
 */

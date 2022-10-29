@@ -94,7 +94,7 @@ function Register() {
      
 
     fetch(
-      'http://localhost:8080/graphql', {
+      'http://172.20.10.4:8080/graphql', {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {

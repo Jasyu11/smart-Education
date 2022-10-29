@@ -58,7 +58,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
 
       <Typography variant="h3">{total}</Typography>
 
-      <Button variant="subtitle2" sx={{ opacity: 0.72 }} href = {title}>
+      <Button variant="subtitle2" sx={{ opacity: 0.72 }} href = "coursepage">
         {title}
       </Button>
 

@@ -21,6 +21,8 @@ import CoursePage from './pages/CoursePage';
 import Discussion from './pages/Discussion';
 import Upload from './pages/Upload';
 import LearningMaterial from './pages/LearningMaterial';
+import CreateCourse from './pages/CreateCourse';
+import Courses from './pages/AllCourses';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -31,6 +33,8 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
+        { path: 'CreatingCourses', element: <CreateCourse/>},
+        { path: 'Courses', element: <Courses/>},
         { path: 'blog', element: <BlogPage /> },
         { path: 'profile', element: <Profile/>,},
         { path: 'creatingavatar', element: <CreatingAvatar/>},

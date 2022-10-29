@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
+import React, { useState } from "react";
 // @mui
-import { Box, Card, Link, Typography, Stack } from '@mui/material';
+import { Box, Card, Link, Typography, Stack,  Button, 
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
 import { styled } from '@mui/material/styles';
 // utils
 import { fCurrency } from '../../../utils/formatNumber';
@@ -26,6 +28,20 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   const { name, cover, price, colors, status, priceSale } = product;
+
+  const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+    const handleOk = () => {
+      setOpen(false);
+      console.log({name})
+    };
 
   return (
     <Card>
@@ -71,6 +87,27 @@ export default function ShopProductCard({ product }) {
             &nbsp;
             {fCurrency(price)}
           </Typography>
+          <div>
+            <button onClick={handleClickOpen}>
+              Details
+            </button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>
+                {"Pineapple"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Hi, in this course {name} will try to eat you.
+                  Do you wanna have a try?
+                  Have fun!
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button key = "back" onClick={handleClose}>Return</Button>
+                <Button key = "Enrol" onClick={handleOk}>Enrol</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         </Stack>
       </Stack>
     </Card>

@@ -73,7 +73,7 @@ export default function LoginForm() {
       };
     }
 
-    fetch('http://localhost:8080/graphql', {
+    fetch('http://172.20.10.4:8080/graphql', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
