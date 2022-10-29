@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, DatePicker, Space, Input, Typography, Divider, Card } from "antd";
 import "antd/dist/antd.css";
 // import "./index.css";
+import TextField from '@mui/material/TextField';
 
 
 
@@ -21,6 +22,8 @@ const Assign = () => {
  
   const [assignmentinfolist, setassignmentinfolist] = useState([]);
   const [questionlist, setquestionlist] = useState([]);
+
+
 
   const handleChangeAssigntitle = (event) => {
     setAssigntitle(event.target.value);
@@ -102,6 +105,14 @@ const Assign = () => {
         />
       </div>
       <br />
+      <div>
+        {questionlist.map(item =>{
+          return<div>
+            <TextField id={item.question} required fullWidth label={"Question"} margin="normal"/>
+            <TextField id={item.answer} required fullWidth label={"Answer"} margin="normal"/>
+          </div>
+        })}
+      </div>
       <div style={{padding:"0 50px"}}>
       <button onClick={handleClick}>Add New Question</button>
       <button onClick={handleAssignmentinfolist}>Submit All Questions</button>
