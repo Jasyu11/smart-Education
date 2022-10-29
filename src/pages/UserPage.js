@@ -24,21 +24,13 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
-// components
-import Label from '../components/label';
-import Iconify from '../components/iconify';
-import Scrollbar from '../components/scrollbar';
-// sections
-import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
-// mock
+
 import USERLIST from '../_mock/user';
 import url from '../utils/weburl';
 
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
-
-const rows = []
 
 export default function UserPage() {
 

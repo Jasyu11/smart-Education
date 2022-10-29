@@ -1,314 +1,122 @@
 import { Helmet } from 'react-helmet-async';
-import { filter } from 'lodash';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import TableHead from '@mui/material/TableHead';
+
+import { useEffect, useState } from 'react';
 // @mui
 import {
-  Card,
   Table,
   Stack,
   Paper,
-  Avatar,
-  Button,
-  Popover,
-  Checkbox,
   TableRow,
-  MenuItem,
   TableBody,
   TableCell,
   Container,
   Typography,
-  IconButton,
   TableContainer,
-  TablePagination,
 } from '@mui/material';
-// components
-import Iconify from '../components/iconify';
-import Scrollbar from '../components/scrollbar';
-// sections
-import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
-// mock
-import ASSIGNMENTLIST from '../_mock/assignment';
 
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'course', label: 'Course', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'weight', label: 'Weight', alignRight: false },
-  { id: 'result', label: 'Result', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
-];
-
-// ----------------------------------------------------------------------
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array, comparator, query) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
-  return stabilizedThis.map((el) => el[0]);
-}
+import USERLIST from '../_mock/user';
+import url from '../utils/weburl';
 
 export default function Assignment() {
-  const [open, setOpen] = useState(null);
-
-  const [page, setPage] = useState(0);
-
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('name');
-
-  const [filterName, setFilterName] = useState('');
-
-  const [rowsPerPage, setRowsPerPage] = useState(5);
 
 
-  const navigate = useNavigate();
+  const getAssignments = (initState = []) =>{
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [assignmentsData,setAssignmentsData] = useState(initState);
 
-  const addNewAssignment = () => {
-    navigate('/coursepage/addAssignment', { replace: true });
-  };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
 
+      const courseid = sessionStorage.getItem("courseid")
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
+      const RequestBody = {
+        query:`query{
+                assignments(courseId: ${courseid}){
+                  id
+                  assignmentName
+                  assignmentScore
+                  startTime
+                  endTime
+                  weight
+                }
+              }`,
+      };
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(RequestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        },
 
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
+      })
+        .then(
+          (res) => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!!');
+            }
+            return res.json();
+          },
+        )
+        .then((resData) => {
+          setAssignmentsData(resData.data.assignments);
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = ASSIGNMENTLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+    }, [])
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  const handleFilterByName = (event) => {
-    setPage(0);
-    setFilterName(event.target.value);
-  };
-
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - ASSIGNMENTLIST.length) : 0;
-
-  const filteredUsers = applySortFilter(ASSIGNMENTLIST, getComparator(order, orderBy), filterName);
-
-  const isNotFound = !filteredUsers.length && !!filterName;
+    return assignmentsData;
+  }
 
   return (
     <>
       <Helmet>
-        <title> Assugnment | Minimal UI </title>
+        <title> Assignment </title>
       </Helmet>
 
       <Container>
         <Stack direction='row' alignItems='center' justifyContent='space-between' mb={5}>
           <Typography variant='h4' gutterBottom>
-            Assignment
+            Assignments
           </Typography>
-          <Button variant='contained' startIcon={<Iconify icon='eva:plus-fill' />} onClick={addNewAssignment}>
-            New Assignment
-          </Button>
         </Stack>
 
-        <Card>
-
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={ASSIGNMENTLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, status, course, weight, result, avatarUrl, isVerified } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
-
-                    return (
-                      <TableRow hover key={id} tabIndex={-1} role='checkbox' selected={selectedUser}>
-                        <TableCell padding='checkbox'>
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-
-                        <TableCell component='th' scope='row' padding='none'>
-                          <Stack direction='row' alignItems='center' spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant='subtitle2' noWrap>
-                              {name}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-
-                        <TableCell align='left'>{course}</TableCell>
-
-                        <TableCell align='left'>{isVerified ? 'Yes' : 'No'}</TableCell>
-
-                        <TableCell align='left'>{weight}</TableCell>
-
-                        <TableCell align='left'>{result}</TableCell>
-
-                        <TableCell align='left'>
-                          {status}
-                        </TableCell>
-
-
-                        <TableCell align='right'>
-                          <IconButton size='large' color='inherit' onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
-                        <Paper
-                          sx={{
-                            textAlign: 'center',
-                          }}
-                        >
-                          <Typography variant='h6' paragraph>
-                            Not found
-                          </Typography>
-
-                          <Typography variant='body2'>
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
-                          </Typography>
-                        </Paper>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component='div'
-            count={ASSIGNMENTLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Title</TableCell>
+                <TableCell >Score</TableCell>
+                <TableCell >Weight</TableCell>
+                <TableCell >Start Time</TableCell>
+                <TableCell >End Time</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {getAssignments().map((assignment) => (
+                <TableRow
+                  key={assignment.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component='th' scope='row'>
+                    {assignment.assignmentName}
+                  </TableCell>
+                  <TableCell>{assignment.assignmentName}</TableCell>
+                  <TableCell>{assignment.assignmentScore}</TableCell>
+                  <TableCell>{assignment.weight}</TableCell>
+                  <TableCell>{assignment.startTime}</TableCell>
+                  <TableCell>{assignment.endTime}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Container>
 
-      <Popover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 1,
-            width: 140,
-            '& .MuiMenuItem-root': {
-              px: 1,
-              typography: 'body2',
-              borderRadius: 0.75,
-            },
-          },
-        }}
-      >
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          <Button type='primary'>
-            <Link to='/dashboard/assignmentDetail'>Detail</Link>
-          </Button>
 
-        </MenuItem>
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          <Button type='primary'>
-            <Link to='/dashboard/assignmentMark'>Mark</Link>
-          </Button>
-        </MenuItem>
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
-      </Popover>
     </>
   );
 }
