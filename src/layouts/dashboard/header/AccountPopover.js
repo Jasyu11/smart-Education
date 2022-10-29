@@ -110,7 +110,7 @@ export default function AccountPopover() {
 
         <MenuItem onClick={Logout} sx={{ m: 1 }}>
           
-          <Link to='/'> Logout </Link>
+          <Link to='/login'> Logout </Link>
         </MenuItem>
       </Popover>
     </>

@@ -36,8 +36,11 @@ Nav.propTypes = {
 };
 
 export default function Nav({ openNav, onCloseNav }) {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0e0af5ec4534d79272b9b247dcacac46e6d919ed
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -73,7 +76,11 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+<<<<<<< HEAD
               {account.displayName}
+=======
+                {account.role}
+>>>>>>> 0e0af5ec4534d79272b9b247dcacac46e6d919ed
               </Typography>
             </Box>
           </StyledAccount>

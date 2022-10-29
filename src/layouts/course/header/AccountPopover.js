@@ -41,7 +41,10 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0e0af5ec4534d79272b9b247dcacac46e6d919ed
   return (
     <>
       <IconButton
@@ -85,10 +88,17 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
+<<<<<<< HEAD
           {account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
           {account.email}
+=======
+            {account.displayName}
+          </Typography>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+            {account.email}
+>>>>>>> 0e0af5ec4534d79272b9b247dcacac46e6d919ed
           </Typography>
         </Box>
 

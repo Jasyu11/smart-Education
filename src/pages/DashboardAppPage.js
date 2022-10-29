@@ -32,9 +32,11 @@ export default function DashboardAppPage() {
     useEffect(() => {
 
       const id = sessionStorage.getItem("userid");
-
-      const studentRequestBody = {
-        query:`query{
+      const type = sessionStorage.getItem("usertype");
+      let requestBody;
+      if (type === "Student"){
+          requestBody = {
+              query:`query{
                 studentInformation(studentId: ${id}){
                     id
                     enrolledCourses{
@@ -46,10 +48,27 @@ export default function DashboardAppPage() {
                       price
                   }
               }}`,
-      };
+          };
+      }else {
+          requestBody = {
+              query:`query{
+                teacherInformation(teacherId: ${id}){
+                    id
+                    createdCourses{
+                      id
+                      course_name
+                      teacher{
+                        user_name
+                      }
+                      price
+                  }
+              }}`,
+          };
+      }
+
       fetch(url, {
         method: 'POST',
-        body: JSON.stringify(studentRequestBody),
+        body: JSON.stringify(requestBody),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -64,7 +83,12 @@ export default function DashboardAppPage() {
           },
         )
         .then((resData) => {
-          setCourseData(resData.data.studentInformation.enrolledCourses);
+            if (type === "Student"){
+                setCourseData(resData.data.studentInformation.enrolledCourses);
+            }else {
+                console.log(resData)
+                setCourseData(resData.data.teacherInformation.createdCourses);
+            }
           console.log(courseData);
         })
         .catch((err) => {
@@ -99,7 +123,7 @@ export default function DashboardAppPage() {
         <Grid container spacing={3}>
           {getCourseData().map(item =>{
             return <Grid item xs={12} sm={6} md={3} key={item.id}>
-              <AppWidgetSummary title={item.teacher.user_name} total={item.course_name} icon={'ant-design:android-filled'} />
+              <AppWidgetSummary title={item.teacher.user_name} total={item.course_name} />
             </Grid>
           })}
 
