@@ -22,6 +22,10 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 // components
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
@@ -74,6 +78,7 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function Assignment() {
+  const [type, setTyp] = useState('');
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -87,6 +92,10 @@ export default function Assignment() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChange = (event) => {
+    setTyp(event.target.value);
+  };
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -157,8 +166,13 @@ export default function Assignment() {
           <Typography variant="h4" gutterBottom>
             Assignment
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" /> } 
+           href='/coursepage/creatingAssign'>
             New Assignment
+          </Button>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" /> } 
+           href='/coursepage/creatingMCQ'>
+            New Assignment MCQ
           </Button>
         </Stack>
 

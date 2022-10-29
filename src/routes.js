@@ -24,7 +24,8 @@ import CloudLogin from './pages/CloudLogin';
 import LearningMaterial from './pages/LearningMaterial';
 import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
-import Assign from './pages/Assign';
+import Assign from './pages/CreatingAssign';
+import CreatingAssignment from './pages/CreatingAssignmentMCQ';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -55,6 +56,8 @@ export default function Router() {
       { path: 'Discussion', element: <Discussion/>},
       { path: 'LearningMaterial', element: <LearningMaterial/>},
       { path: 'Upload', element: <Upload/>},
+      { path: 'CreatingAssign', element:<Assign/>},
+      { path: 'CreatingMCQ', element:<CreatingAssignment/>},
 
     ]
   },
