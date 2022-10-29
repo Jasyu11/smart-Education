@@ -20,6 +20,7 @@ import AssignmentDetailMCQ from './pages/AssignmentMCQ';
 import CoursePage from './pages/CoursePage';
 import Discussion from './pages/Discussion';
 import Upload from './pages/Upload';
+import CloudLogin from './pages/CloudLogin';
 import LearningMaterial from './pages/LearningMaterial';
 import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
@@ -59,7 +60,7 @@ export default function Router() {
   },
     {
       path: '/',
-      element: <LoginPage />,
+      element: <CloudLogin/>
     },
     {
       path: 'register', element: <Register/>

@@ -114,6 +114,7 @@ export default function DashboardAppPage() {
         <Typography variant="h3" sx={{ mb: 5 }}>
           Hi, Welcome to Smart Education!
         </Typography>
+        
 
 
         <Typography variant="h4" sx={{ mb: 5 }}>
@@ -126,6 +127,7 @@ export default function DashboardAppPage() {
               <AppWidgetSummary title={item.teacher.user_name} total={item.course_name} />
             </Grid>
           })}
+          
 
           <Grid item xs={12} md={6} lg={20}>
             <AppNewsUpdate
