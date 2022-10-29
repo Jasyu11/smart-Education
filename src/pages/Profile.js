@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useEffect, useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
@@ -18,14 +18,116 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Controller } from 'react-hook-form';
 import {Link} from "react-router-dom";
 import Label from '../components/label/Label';
-
-
-
-const theme = createTheme();
-
-
+import url from '../utils/weburl';
 
 function Profile() {
+  const Getprofile=(initState = [])=>{
+    // var Data ={
+    //   name: '',
+    //   email: '',
+    //   balance: '',
+    //   courseData: []
+    // };
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const theme = createTheme();
+    const [Username,setUsername] = useState("");
+    const [Email,setEmail] = useState("");
+    const [Balance,setBalance] = useState("");
+    const [courseData,setCourseData] = useState(initState);
+    // const [Data, setData] = useState(initState);
+    
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+  
+      let RequestBody = "";
+      if(sessionStorage.getItem('usertype') === 'Student'){
+        const id = sessionStorage.getItem("userid");
+  
+        RequestBody = {
+          query:`query{
+                  studentInformation(studentId: ${id}){
+                      id
+                      user_name
+                      user_email
+                      balance
+                      enrolledCourses{
+                        id
+                        course_name
+                        teacher{
+                          user_name
+                        }
+                        price
+                    }
+                }}`,
+        };
+      }else if (sessionStorage.getItem('usertype') === 'Teacher'){
+        const id = sessionStorage.getItem("userid");
+  
+        RequestBody = {
+          query:`query{
+                  teacherInformation(teacherId: ${id}){
+                      id
+                      user_name
+                      user_email
+                      balance
+                      createdCourses{
+                        id
+                        course_name
+                        price
+                    }
+                }}`,
+        };
+      }
+      
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(RequestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+  
+      })
+        .then(
+          (res) => {
+            if (res.status !== 200 && res.status !== 201) {
+              throw new Error('Failed!!');
+            }
+            return res.json();
+          },
+        )
+        .then((resData) => {
+          if(sessionStorage.getItem('usertype') ==='Student'){
+            setUsername(resData.data.studentInformation.user_name);
+            setEmail(resData.data.studentInformation.user_email);
+            setBalance(resData.data.studentInformation.balance);
+            setCourseData(resData.data.studentInformation.enrolledCourses);
+          }else if(sessionStorage.getItem('usertype')==='Teacher'){
+            setUsername(resData.data.teacherInformation.user_name);
+            setEmail(resData.data.teacherInformation.user_email);
+            setBalance(resData.data.teacherInformation.balance);
+            setCourseData(resData.data.teacherInformation.enrolledCourses);
+          }
+          console.log(Username);
+          console.log(Email);
+          console.log(Balance);
+          console.log(courseData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  
+    }, [])
+  
+    const Data ={
+      name: Username,
+      email: Email,
+      balance: Balance,
+      courses: courseData
+    };
+
+    return Data;
+  } 
+
   return (
     <Container>
       <Typography
@@ -70,21 +172,21 @@ function Profile() {
                         left: `400px`,
                         top: `130px`,
                       }}>
-                  User nickname
+                  {Getprofile().name}
                   </Typography>
                 <Typography variant="body1" color="text.secondary" style={{
                         position: "absolute",
                         left: `400px`,
                         top: `150px`,
                       }}>
-                  Username
+                  {Getprofile().email}
                   </Typography>
                 <Typography variant="body1" color="text.secondary" style={{
                         position: "absolute",
                         left: `400px`,
                         top: `170px`,
                       }}>
-                  Email Address
+                  $ {Getprofile().balance}
                   </Typography>
         </div>
 

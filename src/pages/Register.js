@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Logo from '../components/logo';
+import url from '../utils/weburl';
 
 
 
@@ -58,7 +59,11 @@ function Register() {
       console.log('The password you input twice are different!');
       return;
     }
-
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const iosk = reg.test(email);
+    if(!iosk) {
+      alert("Invalid email");
+    }
     let requestBody = '';
     if(identity === 'Student'){
       requestBody = {
@@ -94,7 +99,7 @@ function Register() {
      
 
     fetch(
-      'http://172.20.10.4:8080/graphql', {
+      url, {
         method: 'POST',
         body: JSON.stringify(requestBody),
         headers: {

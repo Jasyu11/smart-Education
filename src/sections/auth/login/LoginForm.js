@@ -12,6 +12,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Iconify from '../../../components/iconify';
+import url from '../../../utils/weburl';
 // ---------------------------------------------------------------------
 
 
@@ -43,6 +44,11 @@ export default function LoginForm() {
 
       return;
     }
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    const iosk = reg.test(email);
+    if(!iosk) {
+      alert("Invalid email");
+    }
     if (identity ==='Student'){
        requestBody = {
         query: `
@@ -73,7 +79,7 @@ export default function LoginForm() {
       };
     }
 
-    fetch('http://172.20.10.4:8080/graphql', {
+    fetch(url, {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -102,6 +108,7 @@ export default function LoginForm() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Invalid email or wrong password");
       });
 
   };
