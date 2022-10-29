@@ -1,5 +1,4 @@
-
-import { useEffect } from 'react'
+import {useEffect, useState} from 'react'
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -15,6 +14,7 @@ import {
   AppNewsUpdate,
   AppWidgetSummary,
 } from '../sections/@dashboard/app';
+import url from "../utils/weburl";
 
 // ----------------------------------------------------------------------
 
@@ -44,8 +44,61 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
-
 export default function CoursePage() {
+
+
+  const getCourses = (initState = []) =>{
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [courseData,setCourseData] = useState(initState);
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+
+      const courseid = sessionStorage.getItem("courseid")
+
+      const RequestBody = {
+        query:`query{
+  courseDetails(courseId: ${courseid}){
+    id
+    course_name
+    course_description
+    teacher{
+      user_name
+    }
+    price
+  }
+}`,
+      };
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(RequestBody),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+      })
+          .then(
+              (res) => {
+                if (res.status !== 200 && res.status !== 201) {
+                  throw new Error('Failed!!');
+                }
+                return res.json();
+              },
+          )
+          .then((resData) => {
+            setCourseData(resData.data.courseDetails[0]);
+            console.log(courseData);
+            console.log(courseData);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+    }, [])
+
+    return courseData;
+  }
+
 
   const mdUp = useResponsive('up', 'md');
   const theme = useTheme();
@@ -68,10 +121,12 @@ export default function CoursePage() {
           {mdUp && (
               <StyledSection >
                 <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                  Course Name
+                  Course Name: {getCourses().course_name}
                 </Typography>
 
-                <img src="/assets/images/covers/cover_20.jpg"  alt="login" />
+                <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+                  Description: {getCourses().course_description}
+                </Typography>
               </StyledSection>
           )}
 

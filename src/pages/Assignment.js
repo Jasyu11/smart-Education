@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { useState } from 'react';
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 // @mui
 import {
   Card,
@@ -36,8 +36,8 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'course', label: 'Course', alignRight: false },
   { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'weight', label: 'Weight', alignRight: false},
-  { id: 'result', label: 'Result', alignRight: false},
+  { id: 'weight', label: 'Weight', alignRight: false },
+  { id: 'result', label: 'Result', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '' },
 ];
@@ -87,6 +87,14 @@ export default function Assignment() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+
+  const navigate = useNavigate();
+
+  const addNewAssignment = () => {
+    navigate('/coursepage/addAssignment', { replace: true });
+  };
+
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -153,17 +161,16 @@ export default function Assignment() {
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
+        <Stack direction='row' alignItems='center' justifyContent='space-between' mb={5}>
+          <Typography variant='h4' gutterBottom>
             Assignment
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant='contained' startIcon={<Iconify icon='eva:plus-fill' />} onClick={addNewAssignment}>
             New Assignment
           </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -183,35 +190,35 @@ export default function Assignment() {
                     const selectedUser = selected.indexOf(name) !== -1;
 
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
+                      <TableRow hover key={id} tabIndex={-1} role='checkbox' selected={selectedUser}>
+                        <TableCell padding='checkbox'>
                           <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
                         </TableCell>
 
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
+                        <TableCell component='th' scope='row' padding='none'>
+                          <Stack direction='row' alignItems='center' spacing={2}>
                             <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
+                            <Typography variant='subtitle2' noWrap>
                               {name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{course}</TableCell>
+                        <TableCell align='left'>{course}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align='left'>{isVerified ? 'Yes' : 'No'}</TableCell>
 
-                        <TableCell align="left">{weight}</TableCell>
-                        
-                        <TableCell align="left">{result}</TableCell>
+                        <TableCell align='left'>{weight}</TableCell>
 
-                        <TableCell align="left">
+                        <TableCell align='left'>{result}</TableCell>
+
+                        <TableCell align='left'>
                           {status}
                         </TableCell>
 
 
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                        <TableCell align='right'>
+                          <IconButton size='large' color='inherit' onClick={handleOpenMenu}>
                             <Iconify icon={'eva:more-vertical-fill'} />
                           </IconButton>
                         </TableCell>
@@ -228,17 +235,17 @@ export default function Assignment() {
                 {isNotFound && (
                   <TableBody>
                     <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                      <TableCell align='center' colSpan={6} sx={{ py: 3 }}>
                         <Paper
                           sx={{
                             textAlign: 'center',
                           }}
                         >
-                          <Typography variant="h6" paragraph>
+                          <Typography variant='h6' paragraph>
                             Not found
                           </Typography>
 
-                          <Typography variant="body2">
+                          <Typography variant='body2'>
                             No results found for &nbsp;
                             <strong>&quot;{filterName}&quot;</strong>.
                             <br /> Try checking for typos or using complete words.
@@ -254,7 +261,7 @@ export default function Assignment() {
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
-            component="div"
+            component='div'
             count={ASSIGNMENTLIST.length}
             rowsPerPage={rowsPerPage}
             page={page}
@@ -285,15 +292,15 @@ export default function Assignment() {
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           <Button type='primary'>
-            <Link to="/dashboard/assignmentDetail">Detail</Link>
+            <Link to='/dashboard/assignmentDetail'>Detail</Link>
           </Button>
-          
+
         </MenuItem>
 
         <MenuItem sx={{ color: 'error.main' }}>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           <Button type='primary'>
-            <Link to="/dashboard/assignmentMark">Mark</Link>
+            <Link to='/dashboard/assignmentMark'>Mark</Link>
           </Button>
         </MenuItem>
 

@@ -24,6 +24,8 @@ import LearningMaterial from './pages/LearningMaterial';
 import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
 import Assign from './pages/Assign';
+import CreateDis from './pages/CreateDis';
+import CreatingAssign from './pages/CreatingAssign';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -41,7 +43,7 @@ export default function Router() {
         { path: 'creatingavatar', element: <CreatingAvatar/>},
       ],
     },
-    { path: '/coursepage',
+    { path: '/coursepage' ,
     element: <CourseLayout/>,
     children:[
       {element:<Navigate to='/coursepage/app'/>, index: true},
@@ -54,6 +56,8 @@ export default function Router() {
       { path: 'Discussion', element: <Discussion/>},
       { path: 'LearningMaterial', element: <LearningMaterial/>},
       { path: 'Upload', element: <Upload/>},
+      {path: 'addDiscussion', element: <CreateDis/>},
+      {path: 'addAssignment', element: <CreatingAssign/>},
 
     ]
   },

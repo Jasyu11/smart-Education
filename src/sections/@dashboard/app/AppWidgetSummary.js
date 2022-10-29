@@ -1,4 +1,4 @@
-// @mui
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography, Button } from '@mui/material';
@@ -30,7 +30,14 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppWidgetSummary({id, title, name, color = 'primary', sx, ...other }) {
+    const navigate = useNavigate();
+
+    const jumpToCoursePage = () => {
+      sessionStorage.setItem("courseid", id);
+      navigate('/coursepage', {replace: true});
+
+    }
   return (
     <Card
       sx={{
@@ -43,10 +50,10 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
       }}
       {...other}
     >
-      <Button href = "/coursepage">{total}</Button>
+      <Button onClick={jumpToCoursePage}>{title}</Button>
 
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }} >
-        {title}
+        {name}
       </Typography>
 
     </Card>
