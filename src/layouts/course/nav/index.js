@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
+import AvatarView from '@sarge/avatar-view';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // mock
 import account from '../../../_mock/account';
@@ -38,6 +39,8 @@ export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
+
+  const url = "https://d1a370nemizbjq.cloudfront.net/511ad04f-8b4e-4565-931d-94ecba87f3ac.glb";
 
   useEffect(() => {
     if (openNav) {
@@ -81,11 +84,12 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/assets/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
+        <AvatarView
+          url={url}
+          rotateAvatar
+          eyeBlink
+          headMovement
+        />
         </Stack>
       </Box>
     </Scrollbar>

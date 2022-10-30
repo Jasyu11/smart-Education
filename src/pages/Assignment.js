@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import TableHead from '@mui/material/TableHead';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // @mui
 import {
   Table,
@@ -89,6 +89,13 @@ export default function Assignment() {
 
     return assignmentsData;
   }
+  const usertype = sessionStorage.getItem('usertype');
+  let button = null;
+  if (usertype === 'Teacher') {
+    button = <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={addAssignment}>
+      Add Assignment
+    </Button>;
+  }
 
   return (
     <>
@@ -101,9 +108,8 @@ export default function Assignment() {
           <Typography variant='h4' gutterBottom>
             Assignments
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={addAssignment}>
-            Add Assignment
-          </Button>
+          {button}
+
         </Stack>
 
         <TableContainer component={Paper}>

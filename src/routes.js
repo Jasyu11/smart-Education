@@ -20,6 +20,7 @@ import AssignmentDetailMCQ from './pages/AssignmentMCQ';
 import CoursePage from './pages/CoursePage';
 import Discussion from './pages/Discussion';
 import Upload from './pages/Upload';
+import CloudLogin from './pages/CloudLogin';
 import LearningMaterial from './pages/LearningMaterial';
 import CreateCourse from './pages/CreateCourse';
 import Courses from './pages/AllCourses';
@@ -27,6 +28,8 @@ import Assign from './pages/Assign';
 import CreateDis from './pages/CreateDis';
 import CreatingAssign from './pages/CreatingAssign';
 import SampleAnswers from './pages/SampleAnswers';
+import Marks from './pages/Marks';
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -59,12 +62,14 @@ export default function Router() {
       { path: 'Upload', element: <Upload/>},
       {path: 'addDiscussion', element: <CreateDis/>},
       {path: 'addAssignment', element: <CreatingAssign/>},
-      {path: 'sampleAnswer', element: <SampleAnswers/>}
+      {path: 'sampleAnswer', element: <SampleAnswers/>},
+      { path: 'Marks', element: <Marks/>},
+
     ]
   },
     {
       path: '/',
-      element: <LoginPage />,
+      element: <CloudLogin/>
     },
     {
       path: 'register', element: <Register/>

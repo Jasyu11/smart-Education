@@ -14,8 +14,10 @@ import {
 
 import {fCurrency} from "../../utils/formatNumber";
 import {AppWidgetSummary} from "./app";
+import url from '../../utils/weburl';
 
 export default function CourseCard({course}){
+    const studentid = sessionStorage.getItem("userid")
     const {id, course_name: courseName, price, teacher, course_description: courseDescription} = course;
     const usertype = sessionStorage.getItem("usertype");
     const [open, setOpen] = React.useState(false);
@@ -24,16 +26,10 @@ export default function CourseCard({course}){
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
 
-  let button = null;
-  if (usertype === 'Student') {
-    button = <Button key = "Enrol" onClick={handleOk}>Enrol</Button>;
-  }
 
-  const handleOk = () => {
+
+  const handleClose = () => {
     enrollCourse();
     setOpen(false);
     console.log({ courseName });
@@ -76,7 +72,10 @@ export default function CourseCard({course}){
 
     return true;
   };
-
+  let button = null;
+  if (usertype === 'Student') {
+    button = <Button key = "Enrol" onClick={handleClose}>Enrol</Button>;
+  }
   return (
     <Card>
 

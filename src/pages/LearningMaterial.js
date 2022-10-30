@@ -9,6 +9,8 @@ import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import Showme from '../components/showme/showme';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -305,7 +307,7 @@ export default function BlogPage() {
               onError={() => console.log("onError callback")}
             />
         </div> */}
-        {/* <Showme/> */}
+         <Showme/>
         </Grid>
 
 

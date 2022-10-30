@@ -30,7 +30,6 @@ function Profile() {
   const navigate = useNavigate();
   const Getprofile=(initState = [])=>{
 
-
     // const [Data, setData] = useState(initState);
     
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -91,10 +90,12 @@ function Profile() {
             if (res.status !== 200 && res.status !== 201) {
               throw new Error('Failed!!');
             }
+            console.log(res);
             return res.json();
           },
         )
         .then((resData) => {
+          console.log(resData);
           if(sessionStorage.getItem('usertype') ==='Student'){
             setUsername(resData.data.studentInformation.user_name);
             setEmail(resData.data.studentInformation.user_email);
