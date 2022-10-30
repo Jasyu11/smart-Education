@@ -124,7 +124,7 @@ export default function DashboardAppPage() {
         <Grid container spacing={3}>
           {getCourseData().map(item =>{
             return <Grid item xs={12} sm={6} md={3} key={item.id}>
-              <AppWidgetSummary id={item.id} name={item.teacher.user_name} title={item.course_name} />
+              <AppWidgetSummary id={item.id} name={item.teacher.user_name} title={item.course_name} type =''/>
             </Grid>
           })}
 

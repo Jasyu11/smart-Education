@@ -59,7 +59,7 @@ const StyledSection = styled('div')(({ theme }) => ({
 export default function BlogPage() {
   const mdUp = useResponsive('up', 'md');
   const [expanded, setExpanded] = React.useState(false);
-
+  const usertype = sessionStorage.getItem("usertype");
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState();
   const [URL, setURL] = React.useState();
@@ -206,6 +206,10 @@ export default function BlogPage() {
     setOpen(false);
   };
 
+  let button = null;
+    if (usertype === 'Teacher') {
+      button = <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" /> } onClick={handleClickOpen}>New Video</Button>;
+    }
 
   return (
     
@@ -219,9 +223,10 @@ export default function BlogPage() {
           <Typography variant="h4" gutterBottom>
             Learning Material
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" /> } onClick={handleClickOpen}>
+          {/* <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" /> } onClick={handleClickOpen}>
             New Video
-          </Button>
+          </Button> */}
+          {button}
         </Stack>
 
        <Dialog open={open} onClose={handleClose}>

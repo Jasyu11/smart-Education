@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react'
+
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
@@ -137,15 +138,15 @@ export default function CoursePage() {
 
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6} md={4}>
-                <AppWidgetSummary title="Assignment"  icon={'ant-design:android-filled'} />
+              <AppWidgetSummary type="assignment"  color="info" icon={'ant-design:apple-filled'} />
               </Grid>
 
               <Grid item xs={12} sm={6} md={4}>
-                <AppWidgetSummary title="LearningMaterial"  color="info" icon={'ant-design:apple-filled'} />
+                <AppWidgetSummary type="LearningMaterial"  color="info" icon={'ant-design:apple-filled'} />
               </Grid>
 
               <Grid item xs={12} sm={6} md={4}>
-                <AppWidgetSummary title="Discussion"  color="warning" icon={'ant-design:windows-filled'} />
+                <AppWidgetSummary type="Discussion"  color="warning" icon={'ant-design:windows-filled'} />
               </Grid>
 
             </Grid>

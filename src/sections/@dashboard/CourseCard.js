@@ -17,7 +17,7 @@ import {AppWidgetSummary} from "./app";
 
 export default function CourseCard({course}){
     const {id, course_name: courseName, price, teacher, course_description: courseDescription} = course;
-
+    const usertype = sessionStorage.getItem("usertype");
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -32,6 +32,11 @@ export default function CourseCard({course}){
         setOpen(false);
         console.log({courseName})
     };
+
+    let button = null;
+    if (usertype === 'Student') {
+      button = <Button key = "Enrol" onClick={handleOk}>Enrol</Button>;
+    }
 
     return (
         <Card>
@@ -69,7 +74,8 @@ export default function CourseCard({course}){
                             </DialogContent>
                             <DialogActions>
                                 <Button key = "Back" onClick={handleClose}>Return</Button>
-                                <Button key = "Enrol" onClick={handleOk}>Enrol</Button>
+                                {/* <Button key = "Enrol" onClick={handleOk}>Enrol</Button> */}
+                                {button}
                             </DialogActions>
                         </Dialog>
                     </div>

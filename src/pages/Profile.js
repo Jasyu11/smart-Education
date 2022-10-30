@@ -47,6 +47,7 @@ function Profile() {
                       user_name
                       user_email
                       balance
+                      url
                       enrolledCourses{
                         id
                         course_name
@@ -67,6 +68,7 @@ function Profile() {
                       user_name
                       user_email
                       balance
+                      url
                       createdCourses{
                         id
                         course_name

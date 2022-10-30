@@ -30,12 +30,16 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function AppWidgetSummary({id, title, name, color = 'primary', sx, ...other }) {
+export default function AppWidgetSummary({id, type, title, name, color = 'primary', sx, ...other }) {
     const navigate = useNavigate();
-
+    
     const jumpToCoursePage = () => {
-      sessionStorage.setItem("courseid", id);
-      navigate('/coursepage', {replace: true});
+      if(id !== undefined){
+        sessionStorage.setItem("courseid", id);
+      }
+      
+      navigate(`/coursepage/${type}`, {replace: true});
+      // navigate('/coursepage', {replace: true});
 
     }
   return (
@@ -50,7 +54,7 @@ export default function AppWidgetSummary({id, title, name, color = 'primary', sx
       }}
       {...other}
     >
-      <Button onClick={jumpToCoursePage}>{title}</Button>
+      <Button onClick={jumpToCoursePage}>{title}{type}</Button>
 
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }} >
         {name}
