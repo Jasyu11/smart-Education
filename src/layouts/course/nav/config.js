@@ -31,11 +31,7 @@ const navConfig = [
     path: '/coursepage/learningmaterial',
     icon: icon('ic_blog'),
   },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
+
 ];
 
 export default navConfig;
