@@ -11,7 +11,7 @@ import url from "../utils/weburl";
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
-
+    const usertype = sessionStorage.getItem("usertype");
     const getCourses = (initState = []) =>{
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [coursesData,setCoursesData] = useState(initState);
@@ -49,6 +49,7 @@ export default function ProductsPage() {
                 )
                 .then((resData) => {
                     setCoursesData(resData.data.courses);
+
                     console.log(coursesData);
                 })
                 .catch((err) => {
@@ -58,6 +59,14 @@ export default function ProductsPage() {
         }, [])
 
         return coursesData;
+    }
+
+    let button = null;
+    if (usertype === 'Teacher') {
+      button = <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill"/>}
+                        href='/dashboard/creatingcourses'>
+                    New Courses
+                </Button>;
     }
 
     return (
@@ -71,10 +80,11 @@ export default function ProductsPage() {
                     <Typography variant="h4" gutterBottom>
                         All Courses
                     </Typography>
-                    <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill"/>}
+                    {button}
+                    {/* <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill"/>}
                             href='/dashboard/creatingcourses'>
                         New Courses
-                    </Button>
+                    </Button> */}
                 </Stack>
 
                 <Grid container spacing={3} >

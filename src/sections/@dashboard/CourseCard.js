@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
-  Card,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle, Grid,
-  Link,
-  Stack,
-  Typography,
-} from '@mui/material';
+    Button,
+    Card,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle, Grid,
+    Link,
+    Stack,
+    Typography
+} from "@mui/material";
 
-import { fCurrency } from '../../utils/formatNumber';
-import { AppWidgetSummary } from './app';
-import url from '../../utils/weburl';
+import {fCurrency} from "../../utils/formatNumber";
+import {AppWidgetSummary} from "./app";
 
-export default function CourseCard({ course }) {
-  const { id, course_name: courseName, price, teacher, course_description: courseDescription } = course;
-  const studentid = sessionStorage.getItem("userid");
+export default function CourseCard({course}){
+    const {id, course_name: courseName, price, teacher, course_description: courseDescription} = course;
+    const usertype = sessionStorage.getItem("usertype");
+    const [open, setOpen] = React.useState(false);
 
-  const [open, setOpen] = React.useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  let button = null;
+  if (usertype === 'Student') {
+    button = <Button key = "Enrol" onClick={handleOk}>Enrol</Button>;
+  }
 
   const handleOk = () => {
     enrollCourse();
@@ -91,32 +94,33 @@ export default function CourseCard({ course }) {
 
         <Stack direction='row' alignItems='center' justifyContent='space-between'>
 
-          <Typography variant='subtitle1'>
-            &nbsp;
-            {fCurrency(price)}
-          </Typography>
-          <div>
-            <button onClick={handleClickOpen}>
-              Details
-            </button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>
-                {courseName}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  {courseDescription}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button key='Back' onClick={handleClose}>Close</Button>
-                <Button key='Enroll' onClick={handleOk}>Enroll</Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        </Stack>
-      </Stack>
-    </Card>
-  );
+                    <Typography variant="subtitle1">
+                        &nbsp;
+                        {fCurrency(price)}
+                    </Typography>
+                    <div>
+                        <button onClick={handleClickOpen}>
+                            Details
+                        </button>
+                        <Dialog open={open} onClose={handleClose}>
+                            <DialogTitle>
+                                {courseName}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    {courseDescription}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button key = "Back" onClick={handleClose}>Return</Button>
+                                {/* <Button key = "Enrol" onClick={handleOk}>Enrol</Button> */}
+                                {button}
+                            </DialogActions>
+                        </Dialog>
+                    </div>
+                </Stack>
+            </Stack>
+        </Card>
+    );
 
 }

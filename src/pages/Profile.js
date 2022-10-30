@@ -1,39 +1,36 @@
 import React,{ useEffect, useState } from 'react'
+
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
 import Container from '@mui/material/Container'
-import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import { FormControl, IconButton } from '@mui/material'
-import Avatar from '@mui/material/Avatar';
-import { green,red } from '@mui/material/colors';
-import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Controller } from 'react-hook-form';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import Label from '../components/label/Label';
 import url from '../utils/weburl';
 
+
 function Profile() {
-  const Getprofile=(initState = [])=>{
-    // var Data ={
-    //   name: '',
-    //   email: '',
-    //   balance: '',
-    //   courseData: []
-    // };
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const theme = createTheme();
+  const [amount, setAmount] = useState();
+  const [open, setOpen] = useState(false);
     const [Username,setUsername] = useState("");
     const [Email,setEmail] = useState("");
     const [Balance,setBalance] = useState("");
-    const [courseData,setCourseData] = useState(initState);
+    const [courseData,setCourseData] = useState([]);
+  const navigate = useNavigate();
+  const Getprofile=(initState = [])=>{
+
+
     // const [Data, setData] = useState(initState);
     
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -50,6 +47,7 @@ function Profile() {
                       user_name
                       user_email
                       balance
+                      url
                       enrolledCourses{
                         id
                         course_name
@@ -70,6 +68,7 @@ function Profile() {
                       user_name
                       user_email
                       balance
+                      url
                       createdCourses{
                         id
                         course_name
@@ -128,7 +127,60 @@ function Profile() {
     return Data;
   }
 
-  const data = Getprofile();
+  // const data = Getprofile();
+
+
+  const changeAmount = (event) => {
+    setAmount(parseFloat(event.target.value));
+    console.log(amount);
+  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const Recharge = (event) => {
+    const id = sessionStorage.getItem("userid");
+
+    console.log(amount);
+    const requestBody = {
+      query:`
+        mutation{
+          recharge(studentId:${id}, amount:${amount}){
+            balance
+          }
+        }
+      `
+    };
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+    })
+      .then(
+        (res) => {
+          if (res.status !== 200 && res.status !== 201) {
+            throw new Error('Failed!!');
+          }
+          return res.json();
+        },
+      )
+      .then((resData) => {
+        console.log(resData);
+        setBalance(resData.data.recharge.balance);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      setOpen(false);
+  }
+
 
   return (
     <Container>
@@ -167,7 +219,44 @@ function Profile() {
         </Label>
 
         
-        <Button href="./EditProfile">Update Profile</Button>
+        <Button variant="outlined" onClick={handleClickOpen}>Recharge</Button>
+
+        <div>
+            <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Subscribe</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                To recharge your account, please enter your card number and amount here.
+              </DialogContentText>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                name="card"
+                label="Card Number"
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="amount"
+                name="amount"
+                label="Amount"
+                type="number"
+                fullWidth
+                variant="standard"
+                onChange={(e)=>changeAmount(e)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button onClick={Recharge}>Recharge</Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+
                 <Typography variant="body1" color="text.secondary"
                     style={{
                         position: "absolute",
@@ -188,7 +277,7 @@ function Profile() {
                         left: `400px`,
                         top: `170px`,
                       }}>
-                  $ {Getprofile().balance}
+                  $ {Balance}
                   </Typography>
         </div>
 
