@@ -5,6 +5,7 @@ In order to run the frontend, you can go inside the xxx folder and install all t
 1.    npm install 
 
 For the backend, you can go inside the xxx folder using the command 
+
 2.   ./mvnw spring-boot:run   
      
 Finally, you can start the project by using ‘npm start’ in the frontend, and a sign-in page will open for you to enter the system.
