@@ -58,16 +58,16 @@ export default function CoursePage() {
 
       const RequestBody = {
         query:`query{
-  courseDetails(courseId: ${courseid}){
-    id
-    course_name
-    course_description
-    teacher{
-      user_name
-    }
-    price
-  }
-}`,
+              courseDetails(courseId: ${courseid}){
+                id
+                course_name
+                course_description
+                teacher{
+                  user_name
+                }
+                price
+              }
+            }`,
       };
       fetch(url, {
         method: 'POST',
