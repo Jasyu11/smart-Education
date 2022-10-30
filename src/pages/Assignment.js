@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import TableHead from '@mui/material/TableHead';
-
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 // @mui
 import {
@@ -12,14 +12,33 @@ import {
   TableCell,
   Container,
   Typography,
-  TableContainer,
+  TableContainer, Button,
 } from '@mui/material';
 
 import USERLIST from '../_mock/user';
 import url from '../utils/weburl';
+import Iconify from '../components/iconify';
+
 
 export default function Assignment() {
 
+  const jumpToDetail = (id, name) => {
+    sessionStorage.setItem("assignmentid", id);
+    sessionStorage.setItem("assignmenttitle", name)
+    navigate('/coursepage/AssignmentDetail', {replace: true});
+  }
+
+  const jumpToSample = (id, name) =>{
+    sessionStorage.setItem("assignmentid", id);
+    sessionStorage.setItem("assignmenttitle", name)
+    navigate('/coursepage/sampleAnswer', {replace: true});
+  }
+
+  const addAssignment = () => {
+    navigate('/coursepage/addAssignment', {replace: true});
+  }
+
+  const navigate = useNavigate();
 
   const getAssignments = (initState = []) =>{
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -82,6 +101,9 @@ export default function Assignment() {
           <Typography variant='h4' gutterBottom>
             Assignments
           </Typography>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={addAssignment}>
+            Add Assignment
+          </Button>
         </Stack>
 
         <TableContainer component={Paper}>
@@ -93,6 +115,8 @@ export default function Assignment() {
                 <TableCell >Weight</TableCell>
                 <TableCell >Start Time</TableCell>
                 <TableCell >End Time</TableCell>
+                <TableCell >Take Assignment</TableCell>
+                <TableCell >Sample Answer</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -101,14 +125,24 @@ export default function Assignment() {
                   key={assignment.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component='th' scope='row'>
-                    {assignment.assignmentName}
-                  </TableCell>
                   <TableCell>{assignment.assignmentName}</TableCell>
                   <TableCell>{assignment.assignmentScore}</TableCell>
                   <TableCell>{assignment.weight}</TableCell>
                   <TableCell>{assignment.startTime}</TableCell>
                   <TableCell>{assignment.endTime}</TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="success"
+                            onClick={(e) => jumpToDetail(assignment.id, assignment.assignmentName)}>
+                      Take Assignment
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="contained" color="secondary"
+                            onClick={(e) => jumpToSample(assignment.id, assignment.assignmentName)}>
+                      Sample Answer
+                    </Button>
+                  </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>

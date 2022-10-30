@@ -21,7 +21,7 @@ const Assign = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [mark, setMark] = useState('');
-  const [assignmentid, setAssignmentid] = useState();
+  const [assignmentid, setAssignmentid] = useState(0);
 
   const [fromDate, setFromDate] = useState('current');
   const [toDate, setToDate] = useState('current');
@@ -31,6 +31,7 @@ const Assign = () => {
   const [choiceQuestionList, setChoiceQuestionList] = useState([]);
 
 
+  let assignmentSubmitid = 0;
   const handleChangeAssigntitle = (event) => {
     setAssigntitle(event.target.value);
   };
@@ -48,7 +49,7 @@ const Assign = () => {
     setToDate(datesString[1]);
 
   };
-  
+
   const deleteShortQuestion = (index) => {
     const newList = [...questionlist];
     newList.splice(index, 1);
@@ -60,7 +61,7 @@ const Assign = () => {
     newList.splice(index, 1);
     setChoiceQuestionList(newList);
   }
-  
+
   const onChangeShortQuestion = (event,index) => {
     const newList = [...questionlist];
     newList[index].question = event.target.value;
@@ -115,16 +116,21 @@ const Assign = () => {
   const handleAssignmentinfolist = (event) => {
     createAssignment();
     console.log(questionlist);
+    setTimeout(subQuestionsInfo,4000)
+  };
+
+  const subQuestionsInfo = () => {
     questionlist.map((shortQuestion, index) => {
       return createShortQuestion(shortQuestion);
     });
     choiceQuestionList.map((choiceQuestion, index) =>{
       return createChoiceQuestion(choiceQuestion);
     });
-
-
     navigate('/coursepage/Assignment', {replace: true});
+  }
 
+  const setFunction = () =>{
+    console.log(assignmentid)
   };
 
   const createAssignment = () =>{
@@ -160,7 +166,9 @@ const Assign = () => {
         },
       )
       .then((resData) => {
+        console.log(resData.data.createAssignment.id);
         setAssignmentid(resData.data.createAssignment.id)
+        assignmentSubmitid = resData.data.createAssignment.id;
       })
       .catch((err) => {
         console.log(err);
@@ -175,7 +183,7 @@ const Assign = () => {
                 questionContent: "${shortQuestion.question}"
                 questionScore: ${parseFloat(shortQuestion.mark)}
                 sampleAnswer: ["${shortQuestion.answer}"]
-                assignmentId: ${assignmentid.choices}
+                assignmentId: ${parseInt(assignmentSubmitid,10)}
               }){
                 id
               }
@@ -213,7 +221,7 @@ const Assign = () => {
                 questionContent: "${choiceQuestion.question}"
                 questionScore: ${parseFloat(choiceQuestion.mark)}
                 sampleAnswer: ["${choiceQuestion.answer}"]
-                assignmentId: 3
+                assignmentId: ${parseInt(assignmentSubmitid,10)}
                 choiceAnswers: ["${choiceQuestion.choices[0]}","${choiceQuestion.choices[1]}"
                 "${choiceQuestion.choices[2]}","${choiceQuestion.choices[3]}"]
               }){
@@ -286,9 +294,10 @@ const Assign = () => {
       <Divider />
 
       <div>
-        <Typography variant="h3" sx={{mb: 2, marginLeft: 5 }}>
+        <Typography variant="h2" sx={{mb: 2, marginLeft: 5 }}>
           Short Question
         </Typography>
+
         {questionlist.map((item, index) => {
           return <Box sx={{paddingLeft: 10, paddingRight: 10, textAlign:'center'}} key={index}>
             <TextField id={item.question} required fullWidth label={'Question'} onChange={(e) => onChangeShortQuestion(e,index)} margin='normal' />
@@ -338,8 +347,6 @@ const Assign = () => {
         </Button>
 
       </div>
-
-
       <br />
       <br />
       <br />

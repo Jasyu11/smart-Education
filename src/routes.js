@@ -26,6 +26,7 @@ import Courses from './pages/AllCourses';
 import Assign from './pages/Assign';
 import CreateDis from './pages/CreateDis';
 import CreatingAssign from './pages/CreatingAssign';
+import SampleAnswers from './pages/SampleAnswers';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -58,7 +59,7 @@ export default function Router() {
       { path: 'Upload', element: <Upload/>},
       {path: 'addDiscussion', element: <CreateDis/>},
       {path: 'addAssignment', element: <CreatingAssign/>},
-
+      {path: 'sampleAnswer', element: <SampleAnswers/>}
     ]
   },
     {

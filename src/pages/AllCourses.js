@@ -48,10 +48,7 @@ export default function ProductsPage() {
                     },
                 )
                 .then((resData) => {
-                    console.log("123456")
                     setCoursesData(resData.data.courses);
-                    console.log("123456")
-
                     console.log(coursesData);
                 })
                 .catch((err) => {
@@ -62,7 +59,6 @@ export default function ProductsPage() {
 
         return coursesData;
     }
-
 
     return (
         <>

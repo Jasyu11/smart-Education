@@ -1,37 +1,27 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useEffect, useState } from 'react';
-// @mui
+
+import * as React from 'react';
 import {
-  Container,
-  Stack,
-  Typography,
-  Grid,
   Box,
-  TextField,
+  Button,
+  Container,
+  Divider,
+  FormControlLabel,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  Button,
+  TextField,
+  Typography,
 } from '@mui/material';
-// components
 import TextCard from '../components/text-box/textCard';
 
-import Detail from '../_mock/detail';
+
 import url from '../utils/weburl';
 
-
-// ----------------------------------------------------------------------
-
-
-export default function AssignmentDetail() {
-
+export default function SampleAnswers() {
 
   const assignmentName = sessionStorage.getItem('assignmenttitle');
-
-  let shortQuestions ;
-  let choiceQuestions ;
 
   const navigate = useNavigate();
 
@@ -71,18 +61,12 @@ export default function AssignmentDetail() {
         )
         .then((resData) => {
           setShortQuestionsData(resData.data.getShortQuestions);
-          const list = []
-          resData.data.getShortQuestions.map((shortQuestion) =>{
-            return list.push("");
-          })
-          setValue(list);
         })
         .catch((err) => {
           console.log(err);
         });
 
     }, []);
-    shortQuestions = shortQuestionsData;
     return shortQuestionsData;
   };
 
@@ -124,12 +108,6 @@ export default function AssignmentDetail() {
         .then((resData) => {
           setChoiceQuestionsData(resData.data.getChoiceQuestions);
           console.log(choiceQuestionsData);
-          const choiceList = []
-          resData.data.getChoiceQuestions.map((choiceQuestion) =>{
-            return choiceList.push("");
-          })
-          setChoiceValue(choiceList);
-          console.log(choiceList);
         })
         .catch((err) => {
           console.log(err);
@@ -137,129 +115,23 @@ export default function AssignmentDetail() {
 
     }, []);
 
-    choiceQuestions = choiceQuestionsData;
     return choiceQuestionsData;
   };
 
-  const [value, setValue] = useState([]);
-  const [choiceValue, setChoiceValue] = useState([]);
-
-  const handleChange = (event, index) => {
-    const newList = [...value];
-    newList[index] = event.target.value;
-    setValue(newList);
-  };
-
-  const handleChoiceChange = (event, index) =>{
-    const newList = [...choiceValue];
-    newList[index] = event.target.value;
-    setChoiceValue(newList);
-  }
-
-  const submitQuestions = () => {
-
-    console.log(value);
-    console.log(choiceValue);
-    shortQuestions.map((shortQuestion, index) =>{
-      return submitShortQuestions(shortQuestion.id, value[index])
-    })
-    choiceQuestions.map((choiceQuestion, index) =>{
-      return submitChoiceQuestions(choiceQuestion.id, choiceValue[index])
-    })
-
+  const backToAssignments = () => {
     navigate('/coursepage/Assignment', {replace: true});
-
   }
 
-  const submitShortQuestions = (id, content) => {
-    const userid = sessionStorage.getItem("userid");
-    console.log(id);
-    console.log(userid);
-    console.log(content);
-    const requestBody = {
-      query:`mutation{
-              answerQuestion(questionAnswerInput:{
-                choiceQuestionId: null
-                shortQuestionId: ${id}
-                studentId: ${userid}
-                answerContent: "${content}"
-              }){
-                id
-              }
-            }`,
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(
-        (res) => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!!');
-          }
-          return res.json();
-        },
-      )
-      .then((resData) => {
-        console.log(resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  const submitChoiceQuestions = (id, content) => {
-    const userid = sessionStorage.getItem("userid");
-    const requestBody = {
-      query:`mutation{
-              answerQuestion(questionAnswerInput:{
-                choiceQuestionId: ${id}
-                shortQuestionId: null
-                studentId: ${userid}
-                answerContent: "${content}"
-              }){
-                id
-              }
-            }`,
-    }
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(requestBody),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(
-        (res) => {
-          if (res.status !== 200 && res.status !== 201) {
-            throw new Error('Failed!!');
-          }
-          return res.json();
-        },
-      )
-      .then((resData) => {
-        console.log(resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-
-  return (
+  return(
     <>
       <Helmet>
-        <title> {assignmentName} </title>
+        <title> {assignmentName} | Sample Answer </title>
       </Helmet>
 
       <Container>
         <Typography variant='h2' sx={{ mb: 5 }}>
           {assignmentName}
         </Typography>
-
 
         <Typography variant='h4' sx={{ mb: 5 }}>
           Choice Questions
@@ -272,7 +144,6 @@ export default function AssignmentDetail() {
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="female"
                 name="radio-buttons-group"
-                onClick={(e) => handleChoiceChange(e, index)}
               >
                 <FormControlLabel value={assignment.choiceAnswers[0]} control={<Radio />} label={assignment.choiceAnswers[0]} />
                 <FormControlLabel value={assignment.choiceAnswers[1]} control={<Radio />} label={assignment.choiceAnswers[1]} />
@@ -280,7 +151,13 @@ export default function AssignmentDetail() {
                 <FormControlLabel value={assignment.choiceAnswers[3]} control={<Radio />} label={assignment.choiceAnswers[3]} />
               </RadioGroup>
             </Typography>
-
+            <Divider/>
+            <Typography sx={{ mt:3}}>
+              Sample Answer
+            </Typography>
+            <Typography sx={{ mt:3}}>
+              {assignment.sampleAnswer}
+            </Typography>
           </TextCard>;
         })}
 
@@ -292,17 +169,12 @@ export default function AssignmentDetail() {
         {getShortQuestions().map((assignment, index) => {
           return <TextCard title={assignment.questionContent} sx={{ mb: 5 }}>
 
-            <Typography variant='body2'>
-              <TextField
-                autoFocus
-                fullWidth
-                id= {index}
-                label='Answer here'
-                multiline
-                maxRows={5}
-                onChange={(e) => handleChange(e,index)}
-                variant='standard'
-              />
+
+            <Typography >
+              Sample Answer
+            </Typography>
+            <Typography sx={{ mt:3}}>
+              {assignment.sampleAnswer}
             </Typography>
 
           </TextCard>;
@@ -312,12 +184,13 @@ export default function AssignmentDetail() {
         <br />
         <br />
         <Box sx={{textAlign: "center"}}>
-          <Button
-            variant='contained' onClick={submitQuestions}>Submit</Button>
+          <Button onClick={backToAssignments}
+            variant='contained' >Back</Button>
         </Box>
 
       </Container>
 
     </>
+
   );
 }
